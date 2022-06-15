@@ -9,6 +9,10 @@
       <module name="Number_Base_Converter.Number_Base_Converter-task-build-test-results.main" target="11" />
       <module name="Number_Base_Converter.Number_Base_Converter-task-build-tmp.main" target="11" />
       <module name="Number_Base_Converter.Number_Base_Converter-task.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigInteger-Double_factorial.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigInteger-Multiplication.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigInteger-The_smallest_value.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigInteger-Theory.main" target="11" />
       <module name="Number_Base_Converter.util.main" target="11" />
     </bytecodeTargetLevel>
   </component>

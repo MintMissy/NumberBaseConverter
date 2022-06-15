@@ -18,6 +18,10 @@
             <option value="$PROJECT_DIR$/Number Base Converter/task/build/reports/tests" />
             <option value="$PROJECT_DIR$/Number Base Converter/task/build/test-results" />
             <option value="$PROJECT_DIR$/Number Base Converter/task/build/tmp" />
+            <option value="$PROJECT_DIR$/Topics/BigInteger/Double factorial" />
+            <option value="$PROJECT_DIR$/Topics/BigInteger/Multiplication" />
+            <option value="$PROJECT_DIR$/Topics/BigInteger/The smallest value" />
+            <option value="$PROJECT_DIR$/Topics/BigInteger/Theory" />
             <option value="$PROJECT_DIR$/util" />
           </set>
         </option>

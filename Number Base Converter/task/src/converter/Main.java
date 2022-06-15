@@ -1,107 +1,90 @@
 package converter;
 
-import java.util.Locale;
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Scanner;
+
+import static java.lang.Integer.parseInt;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String actionType = "";
+        String input = "";
+        int targetBase;
+        int sourceBase;
 
-        int decimalNumber = 0;
-        String decimalConversionResult = "";
-        int targetBase = 2;
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter two numbers in format: {source base} {target base} (To quit type /exit) ");
 
-        String notDecimalNumber = "";
-        int notDecimalConversionResult = 0;
-        int sourceBase = 2;
+            String argumentsAsString = scanner.nextLine();
+            String[] arguments = argumentsAsString.split(" ");
+            if (arguments.length == 2) {
+                sourceBase = Integer.parseInt(arguments[0]);
+                targetBase = Integer.parseInt(arguments[1]);
 
-        while (!actionType.equals("/exit")) {
-            System.out.print("Do you want to convert /from decimal or /to decimal? (To quit type /exit) ");
-            actionType = scanner.next();
-
-            if (actionType.equals("/from")) {
-                System.out.print("\nEnter a number in decimal system: ");
-                decimalNumber = scanner.nextInt();
-                System.out.print("\nEnter the target base: ");
-                targetBase = scanner.nextInt();
-
-                decimalConversionResult = convertDecimalNumber(decimalNumber, targetBase);
-                System.out.println("Conversion result: " + decimalConversionResult);
-            } else if (actionType.equals("/to")) {
-                System.out.print("\nEnter source number: ");
-                notDecimalNumber = scanner.next();
-                System.out.print("\nEnter source base: ");
-                sourceBase = scanner.nextInt();
-
-                notDecimalConversionResult = convertToDecimalNumber(notDecimalNumber, sourceBase);
-                System.out.println("Conversion to decimal result: " + notDecimalConversionResult);
-            } else if (actionType.equals("/exit")) {
+                while (true) {
+                    System.out.print("Enter number in base {user source base} to convert to base {user target base} (To go back type /back) "
+                            .replaceFirst("\\{user source base\\}", "" + sourceBase)
+                            .replaceFirst("\\{user target base\\}", "" + targetBase));
+                    input = scanner.next();
+                    System.out.println();
+                    if (input.equals("/back")) {
+                        break;
+                    }
+                    BigInteger decimalNumber;
+                    if (sourceBase != 10){
+                        decimalNumber = convertToDecimalNumber(input, sourceBase);
+                    }else{
+                        decimalNumber = new BigInteger(input);
+                    }
+                    String convertedNumber = convertDecimalNumber(decimalNumber, targetBase);
+                    System.out.println("Conversion result: " + convertedNumber);
+                    System.out.println(decimalNumber);
+                    System.out.println();
+                }
+            } else {
                 break;
             }
         }
     }
 
-    private static String convertDecimalNumber(int numberInDecimal, int targetBase) {
+    private static String convertDecimalNumber(BigInteger numberInDecimal, int targetBase) {
         StringBuilder number = new StringBuilder();
-        while (numberInDecimal > 0) {
-            int reminder = numberInDecimal % targetBase;
-            char character = getHexCharacter(reminder);
+        while (numberInDecimal.compareTo(BigInteger.valueOf(0)) == 1) {
+            BigInteger reminder = numberInDecimal.divideAndRemainder(BigInteger.valueOf(targetBase))[1];
+            char character = getCharacterFromNumber(parseInt(reminder.toString()));
             number.insert(0, character);
-            numberInDecimal /= targetBase;
+            numberInDecimal = numberInDecimal.divide(BigInteger.valueOf(targetBase));
         }
         return number.toString();
     }
 
-    private static int convertToDecimalNumber(String number, int sourceBase) {
-        int convertedNumber = 0;
+    private static BigInteger convertToDecimalNumber(String number, int sourceBase) {
+        BigInteger convertedNumber = BigInteger.ZERO;
         int power = 0;
         for (int i = number.length() - 1; i >= 0; i--) {
             char character = number.charAt(i);
-            convertedNumber += getNumberFromHex(character) * Math.pow(sourceBase, power);
+            BigInteger powerValue = BigInteger.valueOf(sourceBase).pow(power);
+            convertedNumber = convertedNumber.add(getNumberFromCharacter(character).multiply(powerValue));
             power++;
         }
         return convertedNumber;
     }
 
 
-    private static char getHexCharacter(int reminder) {
+    private static char getCharacterFromNumber(int reminder) {
         if (reminder < 10) {
             return String.valueOf(reminder).charAt(0);
         }
-        switch (reminder) {
-            case 10:
-                return 'A';
-            case 11:
-                return 'B';
-            case 12:
-                return 'C';
-            case 13:
-                return 'D';
-            case 14:
-                return 'E';
-            case 15:
-                return 'F';
-        }
-        return '0';
+        return (char) (reminder + 55);
     }
 
-    private static int getNumberFromHex(char hexCharacter) {
-        switch (String.valueOf(hexCharacter).toUpperCase().charAt(0)) {
-            case 'A':
-                return 10;
-            case 'B':
-                return 11;
-            case 'C':
-                return 12;
-            case 'D':
-                return 13;
-            case 'E':
-                return 14;
-            case 'F':
-                return 15;
+    private static BigInteger getNumberFromCharacter(char hexCharacter) {
+        hexCharacter = String.valueOf(hexCharacter).toUpperCase().charAt(0);
+        if (hexCharacter >= 65 && hexCharacter <= 90) {
+            return BigInteger.valueOf(hexCharacter - 55);
         }
-        return Integer.parseInt("" + hexCharacter);
+        return new BigInteger("" + hexCharacter);
     }
 }
