@@ -1,0 +1,25 @@
+[1;31m
+Start test 1[0m
+&Enter number in decimal system: > 523
+Enter target base: > 16
+Conversion result: 20B
+[1;31m
+Start test 2[0m
+&Enter number in decimal system: > 236
+Enter target base: > 16
+Conversion result: EC
+[1;31m
+Start test 3[0m
+&Enter number in decimal system: > 274
+Enter target base: > 16
+Conversion result: 112
+[1;31m
+Start test 4[0m
+&Enter number in decimal system: > 512
+Enter target base: > 2
+Conversion result: 1000000000
+[1;31m
+Start test 5[0m
+&Enter number in decimal system: > 982
+Enter target base: > 8
+Conversion result: 1726
