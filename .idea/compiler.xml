@@ -9,6 +9,11 @@
       <module name="Number_Base_Converter.Number_Base_Converter-task-build-test-results.main" target="11" />
       <module name="Number_Base_Converter.Number_Base_Converter-task-build-tmp.main" target="11" />
       <module name="Number_Base_Converter.Number_Base_Converter-task.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigDecimal-Average.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigDecimal-Gold_mining.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigDecimal-Multiplication.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigDecimal-Round_and_power.main" target="11" />
+      <module name="Number_Base_Converter.Topics-BigDecimal-Theory.main" target="11" />
       <module name="Number_Base_Converter.Topics-BigInteger-Double_factorial.main" target="11" />
       <module name="Number_Base_Converter.Topics-BigInteger-Multiplication.main" target="11" />
       <module name="Number_Base_Converter.Topics-BigInteger-The_smallest_value.main" target="11" />

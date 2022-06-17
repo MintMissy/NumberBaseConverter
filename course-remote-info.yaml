@@ -16,7 +16,7 @@ stages:
   is_completed: true
 - id: 916
   step: 13096
-  is_completed: false
+  is_completed: true
 topics:
   0:
   - title: Binary numbers
@@ -76,12 +76,14 @@ topics:
     theory_id: 5622
   - title: Computer algorithms
     theory_id: 16547
-  - title: Immutability
-    theory_id: 7929
   - title: The big O notation
     theory_id: 16699
+  - title: Best, average and worst cases
+    theory_id: 20084
   - title: Data structures
     theory_id: 16927
+  - title: Immutability
+    theory_id: 7929
   - title: The for-loop
     theory_id: 3505
   - title: Branching statements

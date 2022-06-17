@@ -2,6 +2,8 @@ package converter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -41,7 +43,7 @@ public class Main {
                     if (sourceBase != 10) {
                         if (numberParts.length == 2) {
                             String decimalPart = convertToDecimalNumber(numberParts[0], sourceBase).toString();
-                            String fractionalPart = convertToDecimalNumber(numberParts[1], sourceBase).toString();
+                            String fractionalPart = convertFractionToDecimalNumber(numberParts[1], sourceBase);
                             number = new BigDecimal(decimalPart + "." + fractionalPart);
                         } else {
                             number = convertToDecimalNumber(input, sourceBase);
@@ -60,14 +62,10 @@ public class Main {
                     if (numberParts.length == 2) {
                         String[] convertedNumberParts = number.toString().split("\\.");
                         String decimalPart = convertDecimalNumber(new BigInteger(convertedNumberParts[0]), targetBase);
-                        String fractionalPart = convertDecimalNumber(new BigInteger(convertedNumberParts[1]), targetBase);
+                        String fractionalPart = convertFractionNumber(new BigDecimal("0." + convertedNumberParts[1]), targetBase);
 
-                        if (decimalPart.equals("")){
+                        if (decimalPart.equals("")) {
                             decimalPart = "0";
-                        }
-
-                        while (fractionalPart.length() < numberParts[1].length()) {
-                            fractionalPart += "0";
                         }
 
                         convertedNumber = decimalPart + "." + fractionalPart;
@@ -105,6 +103,37 @@ public class Main {
             power++;
         }
         return new BigDecimal(convertedNumber);
+    }
+
+    private static String convertFractionNumber(BigDecimal fractionalNumber, int targetBase) {
+        StringBuilder number = new StringBuilder();
+        String numberInDecimalStr = fractionalNumber.toString();
+
+        while (number.length() != 5) {
+            numberInDecimalStr = fractionalNumber.multiply(new BigDecimal(targetBase)).toString();
+            String[] numbers = numberInDecimalStr.split("\\.");
+            number.append(getCharacterFromNumber(Integer.parseInt(numbers[0])));
+            fractionalNumber = new BigDecimal("0." + numbers[1]);
+        }
+        return number.toString();
+    }
+
+    private static String convertFractionToDecimalNumber(String number, int sourceBase) {
+        BigDecimal convertedNumber = BigDecimal.ZERO;
+        int power = 1;
+        for (int i = 0; i < number.length(); i++) {
+            char character = number.charAt(i);
+            MathContext ctx = new MathContext(7);
+            BigDecimal powerValue = BigDecimal.ONE.divide(BigDecimal.valueOf(sourceBase), ctx).setScale(5, RoundingMode.HALF_UP).pow(power);
+            convertedNumber = convertedNumber.add(new BigDecimal(getNumberFromCharacter(character)).multiply(powerValue));
+            power++;
+        }
+
+        if (convertedNumber.compareTo(BigDecimal.ZERO) == 0){
+            return "00000";
+        }
+
+        return convertedNumber.toString().replace("0.", "").substring(0, 5);
     }
 
 
